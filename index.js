@@ -3,8 +3,8 @@ import express from "express";
 import dotenv from "dotenv";
 import TodoModel from "./todo.model.js";
 import cors from "cors";
-app.use(cors());
 const app = express();
+app.use(cors());
 dotenv.config();
 app.use(express.json());
 //seeAllTheTodos
