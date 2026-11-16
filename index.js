@@ -3,9 +3,9 @@ import express from "express";
 import dotenv from "dotenv";
 import TodoModel from "./todo.model.js";
 import cors from "cors";
+dotenv.config();
 const app = express();
 app.use(cors());
-dotenv.config();
 app.use(express.json());
 //seeAllTheTodos
 const getAllTodos = async () => {
@@ -56,16 +56,16 @@ app.post("/Todo_upload", async (req, res) => {
     return res.status(500).json({ message: "internal server error" });
   }
 });
-
+const PORT = process.env.PORT || 1102;
 const connectHandler = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("connected to DB successfully");
-    app.listen(process.env.PORT || 1102, () =>
-      console.log(`Server Started on ${process.env.PORT || 1102}`),
-    );
   } catch (error) {
-    console.log(error);
+    console.log("Database connection failed:", error);
   }
+  app.listen(PORT, () => {
+    console.log(`Server Started on port ${PORT}`);
+  });
 };
 connectHandler();
